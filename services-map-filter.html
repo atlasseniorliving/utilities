@@ -30,6 +30,9 @@
   #legend img {
     vertical-align: middle;
   }
+  hr {
+    visibility: hidden;
+  }
  
 
 
@@ -37,7 +40,7 @@
 
 <head>
 
-    <title>Check Box Filter</title>
+    <title>Atlas Senior Living Map Services Filter</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-    scalable=no">
     <meta charset="utf-8">
 
@@ -63,9 +66,9 @@
     // Load the map on the page, center and set zoom level. 
     function initialize() {
         map = new google.maps.Map(document.getElementById('map_canvas'), {
-            zoom: 13,
-            center: new google.maps.LatLng(47.615926, -122.341476),
-            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            zoom: 5,
+            center: new google.maps.LatLng(35.10954653542983, -90.53767848534665),
+            mapTypeId: google.maps.MapTypeId.ROADMAP, //other option: SATELLITE
         });
 
 
@@ -75,7 +78,9 @@
             var marker = new google.maps.Marker({
                 position: feature.position,
                 icon: features[i].icon,
-                title: features[i].name,
+                //title: features[i].name, NO USADA
+                address: features[i].address,
+                location: features[i].locations,
                 map: map
             });
             markers.push({
@@ -85,7 +90,7 @@
             google.maps.event.addListener(marker, 'click', function () {
                 if (typeof infowindow != 'undefined') infowindow.close();
                 infowindow = new google.maps.InfoWindow({
-                    content: feature.name
+                    content: feature.location,
                 });
                 infowindow.open(map, marker);
             });
@@ -99,27 +104,32 @@
 
         var icons = {
             branch: {
-                name: 'Branch'
+                name: 'Assisted Living' // Branch
             },
             drive: {
-                name: 'Drive-Thru'
+                name: 'Independent Living' // Drive-Thru
             },
             atm: {
-                name: 'ATM'
+                name: 'Memory Care' // ATM
             },
             datm: {
-                name: 'Deposit ATM'
-            }
+                name: 'Respite Care' // Deposit ATM
+            },
+            perhomcar: {
+                name: 'Personal Home Care' // other
+            },
         };
 
-        // Marker array
+        // Marker array //communities go place in this sections
         var features = [
             {
-                name: 'Branch 1',
-                position: new google.maps.LatLng(47.621711, -122.345785),
+                //name: 'Kelley Place | Madison Height Enterprise',
+                position: new google.maps.LatLng(31.329891236709816, -85.85736824497684),
                 type: 'branch',
-                icon: 'https://i.postimg.cc/D0MPHFsK/map-fsnb-New.png',
-                filterIcon: 'https://i.postimg.cc/D0MPHFsK/map-fsnb-New.png'
+                location: '<h3>Kelley Place | Madison Height Enterprise</h3><br> 109 Chaney St, Enterprise, AL 36330, Estados Unidos <br> +13343937233 <br> <hr><a href="https://atlasseniorliving.com/madison-heights-enterprise/">Website</a>',
+                //address: '109 Chaney St, Enterprise, AL 36330, Estados Unidos',
+                icon: 'https://atlasseniorliving.com/wp-content/uploads/2022/07/respite-care.png',
+                filterIcon: 'https://atlasseniorliving.com/wp-content/uploads/2022/07/respite-care.png'
             },
             {
                 name: 'Drive-Thru 1',
